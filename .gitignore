@@ -1,0 +1,16 @@
+# Archivos de Visual Studio
+.vs/
+*.vsidx
+*.vscode/
+
+# Archivos de compilación
+bin/
+obj/
+*.exe
+*.dll
+
+# Archivos temporales
+*.log
+*.user
+*.suo
+*.tmp
