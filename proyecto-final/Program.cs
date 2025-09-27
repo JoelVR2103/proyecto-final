@@ -13,6 +13,7 @@ namespace proyecto_final
             
 
             Iniciador.iniciador();
+
             /// lucinda
             /// pedido de dni
             /// si existe deberia darte la bienvenida
