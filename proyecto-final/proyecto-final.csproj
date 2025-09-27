@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Iniciador.cs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\controlador\controlador.csproj">
       <Project>{e0b9c781-980c-475f-904c-4ce155ca4d1b}</Project>
       <Name>controlador</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\modelo\modelo.csproj">
+      <Project>{80a58481-6508-4f36-912e-8ae16aaefb9a}</Project>
+      <Name>modelo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
