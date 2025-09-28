@@ -16,11 +16,11 @@ namespace modelo
         public string Telefono { get; set; }
         public string Email { get; set; }
         public string Direccion { get; set; }
-        public string Grado { get; set; }
+        public Matricula MatriculaActual { get; set; }
 
         public Usuario() { }
 
-        public Usuario(string nombres, string apellidos, int edad, string sexo, string dni, string telefono, string email, string direccion, string grado)
+        public Usuario(string nombres, string apellidos, int edad, string sexo, string dni, string telefono, string email, string direccion)
         {
             Nombres = nombres;
             Apellidos = apellidos;
@@ -30,7 +30,17 @@ namespace modelo
             Telefono = telefono;
             Email = email;
             Direccion = direccion;
-            Grado = grado;
+            MatriculaActual = null;
+        }
+
+        public bool TieneMatricula()
+        {
+            return MatriculaActual != null;
+        }
+
+        public string ObtenerNombreCompleto()
+        {
+            return $"{Nombres} {Apellidos}";
         }
     }
 }
