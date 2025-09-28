@@ -356,6 +356,132 @@ namespace proyecto_final
             return gradoSeleccionado;
         }
 
+        private static Turno SeleccionarTurno()
+        {
+            Console.WriteLine("\n=== SELECCIÓN DE TURNO ===");
+            Console.WriteLine("1. Mañana");
+            Console.WriteLine("2. Tarde");
+            Console.Write("Selecciona tu turno: ");
+
+            string opcion = Console.ReadLine();
+
+            Turno turnoSeleccionado;
+            switch (opcion)
+            {
+                case "1":
+                    turnoSeleccionado = Turno.Mañana;
+                    break;
+                case "2":
+                    turnoSeleccionado = Turno.Tarde;
+                    break;
+                default:
+                    Console.WriteLine("Opción inválida. Seleccionando turno de mañana por defecto.");
+                    turnoSeleccionado = Turno.Mañana;
+                    break;
+            }
+
+            Console.WriteLine($"Has seleccionado turno: {turnoSeleccionado}");
+            return turnoSeleccionado;
+        }
+
+        private static (List<Materia> materias, bool esAutomatico) SeleccionarMaterias()
+        {
+            Console.WriteLine("\n=== SELECCIÓN DE MATERIAS ===");
+            Console.WriteLine("¿Cómo deseas seleccionar tus materias?");
+            Console.WriteLine("1. Seleccionar manualmente");
+            Console.WriteLine("2. Selección automática (aleatoria)");
+            Console.Write("Selecciona una opción: ");
+
+            string opcion = Console.ReadLine();
+
+            switch (opcion)
+            {
+                case "1":
+                    Console.WriteLine("Selección manual activada.");
+                    return (SeleccionarMateriasManual(), false);
+                case "2":
+                    Console.WriteLine("Selección automática activada.");
+                    return (SeleccionarMateriasAutomatico(), true);
+                default:
+                    Console.WriteLine("Opción inválida. Seleccionando automáticamente.");
+                    return (SeleccionarMateriasAutomatico(), true);
+            }
+        }
+
+        private static List<Materia> SeleccionarMateriasManual()
+        {
+            var materiasDisponibles = Materia.ObtenerMateriasDisponibles();
+            var materiasSeleccionadas = new List<Materia>();
+
+            while (true)
+            {
+                Console.WriteLine("\nMaterias disponibles:");
+                for (int i = 0; i < materiasDisponibles.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {materiasDisponibles[i].Nombre} ({materiasDisponibles[i].Creditos} créditos)");
+                }
+
+                Console.WriteLine("\nSelecciona 6 materias (ingresa los números separados por comas):");
+                Console.Write("Ejemplo: 1,3,5,7,9,10: ");
+
+                string entrada = Console.ReadLine();
+
+                // Validar que no esté vacío
+                if (string.IsNullOrWhiteSpace(entrada))
+                {
+                    Console.WriteLine("\nEntrada vacía. Por favor, ingresa los números de las materias.");
+                    continue;
+                }
+
+                string[] indices = entrada.Split(',');
+
+                // Validar que sean exactamente 6 números
+                if (indices.Length != 6)
+                {
+                    Console.WriteLine($"\nDebes seleccionar exactamente 6 materias. Has ingresado {indices.Length}. Inténtalo de nuevo.");
+                    continue;
+                }
+
+                materiasSeleccionadas.Clear();
+                bool seleccionValida = true;
+
+                foreach (string indiceStr in indices)
+                {
+                    if (!int.TryParse(indiceStr.Trim(), out int indice) || indice < 1 || indice > materiasDisponibles.Count)
+                    {
+                        Console.WriteLine($"\nNúmero inválido: '{indiceStr.Trim()}'. Debe ser un número entre 1 y {materiasDisponibles.Count}.");
+                        seleccionValida = false;
+                        break;
+                    }
+
+                    var materia = materiasDisponibles[indice - 1];
+                    if (materiasSeleccionadas.Any(m => m.Id == materia.Id))
+                    {
+                        Console.WriteLine($"\nMateria repetida: {materia.Nombre}. No puedes seleccionar la misma materia dos veces.");
+                        seleccionValida = false;
+                        break;
+                    }
+
+                    materiasSeleccionadas.Add(materia);
+                }
+
+                if (seleccionValida && materiasSeleccionadas.Count == 6)
+                {
+                    Console.WriteLine("\nMaterias seleccionadas manualmente:");
+                    foreach (var materia in materiasSeleccionadas)
+                    {
+                        Console.WriteLine($"- {materia.Nombre} ({materia.Creditos} créditos)");
+                    }
+                    return materiasSeleccionadas;
+                }
+
+                if (seleccionValida)
+                {
+                    Console.WriteLine("\nError inesperado en la selección. Inténtalo de nuevo.");
+                }
+            }
+        }
+
         private static void MostrarInformacionCompleta(Usuario usuario)
         {
             Console.WriteLine("\n=== INFORMACIÓN COMPLETA ===");

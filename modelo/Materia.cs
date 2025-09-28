@@ -23,7 +23,8 @@ namespace modelo
             Creditos = creditos;
         }
 
-        public List<Materia> ObtenerMateriasDisponibles()
+        // Lista estática de las 10 materias disponibles
+        public static List<Materia> ObtenerMateriasDisponibles()
         {
             return new List<Materia>
             {
@@ -39,11 +40,10 @@ namespace modelo
                 new Materia(10, "Metodología de Investigación", "MET101", 3)
             };
         }
+
         public override string ToString()
         {
             return $"{Id}. {Nombre} ({Codigo}) - {Creditos} créditos";
         }
-
-        
     }
 }
