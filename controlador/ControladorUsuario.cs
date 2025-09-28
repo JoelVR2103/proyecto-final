@@ -34,7 +34,8 @@ namespace controlador
 
         public static void ActualizarUsuario(Usuario usuarioActualizado)
         {
-            var usuarioExistente = BuscarUsuarioPorDni(usuarioActualizado.Dni);
+            var usuarios = CargarUsuarios();
+            var usuarioExistente = usuarios.FirstOrDefault(u => u.Dni == usuarioActualizado.Dni);
             if (usuarioExistente != null)
             {
                 usuarioExistente.Nombres = usuarioActualizado.Nombres;
@@ -44,7 +45,8 @@ namespace controlador
                 usuarioExistente.Telefono = usuarioActualizado.Telefono;
                 usuarioExistente.Email = usuarioActualizado.Email;
                 usuarioExistente.Direccion = usuarioActualizado.Direccion;
-                usuarioExistente.Grado = usuarioActualizado.Grado;
+                usuarioExistente.MatriculaActual = usuarioActualizado.MatriculaActual;
+                GuardarUsuarios(usuarios);
             }
         }
 
@@ -61,6 +63,96 @@ namespace controlador
         public static bool ValidarTelefono(string telefono)
         {
             return !string.IsNullOrEmpty(telefono) && telefono.Length >= 9 && telefono.All(char.IsDigit);
+        }
+
+        public static bool ValidarNombres(string nombres)
+        {
+            if (string.IsNullOrWhiteSpace(nombres))
+                return false;
+
+            nombres = nombres.Trim();
+
+            // Debe tener entre 2 y 50 caracteres
+            if (nombres.Length < 2 || nombres.Length > 50)
+                return false;
+
+            // Solo debe contener letras, espacios y acentos
+            var caracteresPermitidos = "abcdefghijklmnopqrstuvwxyzáéíóúüñABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÜÑ ";
+            if (!nombres.All(c => caracteresPermitidos.Contains(c)))
+                return false;
+
+            // No debe empezar o terminar con espacio
+            if (nombres.StartsWith(" ") || nombres.EndsWith(" "))
+                return false;
+
+            // No debe tener espacios dobles
+            if (nombres.Contains("  "))
+                return false;
+
+            return true;
+        }
+
+        public static bool ValidarApellidos(string apellidos)
+        {
+            if (string.IsNullOrWhiteSpace(apellidos))
+                return false;
+
+            apellidos = apellidos.Trim();
+
+            // Debe tener entre 2 y 50 caracteres
+            if (apellidos.Length < 2 || apellidos.Length > 50)
+                return false;
+
+            // Solo debe contener letras, espacios y acentos
+            var caracteresPermitidos = "abcdefghijklmnopqrstuvwxyzáéíóúüñABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÜÑ ";
+            if (!apellidos.All(c => caracteresPermitidos.Contains(c)))
+                return false;
+
+            // No debe empezar o terminar con espacio
+            if (apellidos.StartsWith(" ") || apellidos.EndsWith(" "))
+                return false;
+
+            // No debe tener espacios dobles
+            if (apellidos.Contains("  "))
+                return false;
+
+            return true;
+        }
+
+        public static bool ValidarEdad(int edad)
+        {
+            // Edad debe estar entre 16 y 100 años
+            return edad >= 16 && edad <= 100;
+        }
+
+        public static bool ValidarSexo(string sexo)
+        {
+            if (string.IsNullOrWhiteSpace(sexo))
+                return false;
+
+            sexo = sexo.Trim().ToUpper();
+
+            // Solo acepta exactamente M, F, MASCULINO o FEMENINO
+            return sexo == "M" || sexo == "F" || sexo == "MASCULINO" || sexo == "FEMENINO";
+        }
+
+        public static bool ValidarDireccion(string direccion)
+        {
+            if (string.IsNullOrWhiteSpace(direccion))
+                return false;
+
+            direccion = direccion.Trim();
+
+            // Debe tener entre 10 y 200 caracteres
+            if (direccion.Length < 10 || direccion.Length > 200)
+                return false;
+
+            // Solo debe contener letras, números, espacios y algunos caracteres especiales
+            var caracteresPermitidos = "abcdefghijklmnopqrstuvwxyzáéíóúüñABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÜÑ0123456789 .,#-°";
+            if (!direccion.All(c => caracteresPermitidos.Contains(c)))
+                return false;
+
+            return true;
         }
     }
 }
