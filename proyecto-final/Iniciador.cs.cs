@@ -8,8 +8,16 @@ using modelo;
 
 namespace proyecto_final
 {
-    internal class Iniciador
+    /// <summary>
+    /// Clase principal que maneja la interfaz de usuario y el flujo del sistema de matrícula.
+    /// Proporciona todos los menús, validaciones de entrada y coordinación entre controladores.
+    /// </summary>
+    class Iniciador
     {
+        /// <summary>
+        /// Método principal que inicia el sistema de matrícula universitaria.
+        /// Solicita el DNI del usuario y determina si debe registrarse o acceder como usuario existente.
+        /// </summary>
         public static void iniciador()
         {
             Console.WriteLine("=== SISTEMA DE MATRICULA ===");
@@ -38,6 +46,11 @@ namespace proyecto_final
             }
         }
 
+        /// <summary>
+        /// Maneja el proceso de registro de un nuevo usuario en el sistema.
+        /// Solicita y valida todos los datos personales requeridos, crea el usuario y procede con la matrícula.
+        /// </summary>
+        /// <param name="dni">DNI del nuevo usuario a registrar</param>
         private static void RegistrarNuevoUsuario(string dni)
         {
             Console.WriteLine("\n=== REGISTRO DE NUEVO USUARIO ===");
@@ -108,6 +121,11 @@ namespace proyecto_final
             ProcesarMatricula(nuevoUsuario);
         }
 
+        /// <summary>
+        /// Muestra el menú principal para usuarios existentes en el sistema.
+        /// Permite actualizar datos, gestionar matrícula, ver información completa o salir del sistema.
+        /// </summary>
+        /// <param name="usuario">Usuario existente que ha iniciado sesión</param>
         private static void MostrarMenuUsuarioExistente(Usuario usuario)
         {
             Console.Clear();
@@ -142,6 +160,11 @@ namespace proyecto_final
             }
         }
 
+        /// <summary>
+        /// Permite al usuario actualizar sus datos personales de forma interactiva.
+        /// Muestra los valores actuales y permite modificar cada campo individualmente con validación.
+        /// </summary>
+        /// <param name="usuario">Usuario cuyos datos se van a actualizar</param>
         private static void ActualizarDatosPersonales(Usuario usuario)
         {
             Console.WriteLine("\n=== ACTUALIZACIÓN DE DATOS PERSONALES ===");
@@ -255,6 +278,11 @@ namespace proyecto_final
             MostrarMenuUsuarioExistente(usuario);
         }
 
+        /// <summary>
+        /// Gestiona las opciones de matrícula para usuarios existentes.
+        /// Si el usuario tiene matrícula, muestra opciones de gestión; si no, inicia el proceso de matrícula.
+        /// </summary>
+        /// <param name="usuario">Usuario para el cual gestionar la matrícula</param>
         private static void GestionarMatricula(Usuario usuario)
         {
             Console.Clear();
@@ -300,6 +328,11 @@ namespace proyecto_final
             }
         }
 
+        /// <summary>
+        /// Maneja el proceso completo de matrícula para un usuario.
+        /// Incluye selección de grado, turno, materias y creación de la matrícula final.
+        /// </summary>
+        /// <param name="usuario">Usuario que realizará la matrícula</param>
         private static void ProcesarMatricula(Usuario usuario)
         {
             Console.WriteLine("\n=== PROCESO DE MATRÍCULA ===");
@@ -334,6 +367,11 @@ namespace proyecto_final
             MostrarMenuUsuarioExistente(usuario);
         }
 
+        /// <summary>
+        /// Permite al usuario seleccionar su grado académico de una lista de opciones disponibles.
+        /// Muestra todos los grados disponibles y valida la selección del usuario.
+        /// </summary>
+        /// <returns>Nombre del grado académico seleccionado</returns>
         private static string SeleccionarGrado()
         {
             Console.WriteLine("\n=== SELECCIÓN DE GRADO ===");
@@ -356,6 +394,11 @@ namespace proyecto_final
             return gradoSeleccionado;
         }
 
+        /// <summary>
+        /// Permite al usuario seleccionar su turno de clases (mañana o tarde).
+        /// Valida la entrada y proporciona un valor por defecto en caso de opción inválida.
+        /// </summary>
+        /// <returns>Turno seleccionado por el usuario</returns>
         private static Turno SeleccionarTurno()
         {
             Console.WriteLine("\n=== SELECCIÓN DE TURNO ===");
@@ -384,6 +427,11 @@ namespace proyecto_final
             return turnoSeleccionado;
         }
 
+        /// <summary>
+        /// Coordina la selección de materias, permitiendo al usuario elegir entre selección manual o automática.
+        /// Retorna las materias seleccionadas y un indicador del tipo de selección utilizado.
+        /// </summary>
+        /// <returns>Tupla con la lista de materias seleccionadas y un booleano indicando si fue selección automática</returns>
         private static (List<Materia> materias, bool esAutomatico) SeleccionarMaterias()
         {
             Console.WriteLine("\n=== SELECCIÓN DE MATERIAS ===");
@@ -408,6 +456,11 @@ namespace proyecto_final
             }
         }
 
+        /// <summary>
+        /// Permite al usuario seleccionar manualmente 6 materias de la lista disponible.
+        /// Valida que se seleccionen exactamente 6 materias sin repeticiones y que todas sean válidas.
+        /// </summary>
+        /// <returns>Lista de 6 materias seleccionadas por el usuario</returns>
         private static List<Materia> SeleccionarMateriasManual()
         {
             var materiasDisponibles = Materia.ObtenerMateriasDisponibles();
@@ -482,6 +535,122 @@ namespace proyecto_final
             }
         }
 
+        /// <summary>
+        /// Selecciona automáticamente 6 materias aleatorias de la lista de materias disponibles.
+        /// Garantiza que no haya repeticiones en la selección.
+        /// </summary>
+        /// <returns>Lista de 6 materias seleccionadas aleatoriamente</returns>
+        private static List<Materia> SeleccionarMateriasAutomatico()
+        {
+            var materiasDisponibles = Materia.ObtenerMateriasDisponibles();
+            var random = new Random();
+            var materiasSeleccionadas = new List<Materia>();
+
+            while (materiasSeleccionadas.Count < 6)
+            {
+                var materiaAleatoria = materiasDisponibles[random.Next(materiasDisponibles.Count)];
+                if (!materiasSeleccionadas.Any(m => m.Id == materiaAleatoria.Id))
+                {
+                    materiasSeleccionadas.Add(materiaAleatoria);
+                }
+            }
+
+            Console.WriteLine("\nMaterias seleccionadas automáticamente:");
+            foreach (var materia in materiasSeleccionadas)
+            {
+                Console.WriteLine($"- {materia.Nombre} ({materia.Creditos} créditos)");
+            }
+
+            return materiasSeleccionadas;
+        }
+
+        /// <summary>
+        /// Muestra la información completa de la matrícula actual del usuario.
+        /// Si no tiene matrícula, informa al usuario y regresa al menú de gestión.
+        /// </summary>
+        /// <param name="usuario">Usuario cuya matrícula se mostrará</param>
+        private static void MostrarMatriculaActual(Usuario usuario)
+        {
+            if (usuario.TieneMatricula())
+            {
+                Console.WriteLine("\n=== MATRÍCULA ACTUAL ===");
+                Console.WriteLine(usuario.MatriculaActual.ObtenerResumenMatricula());
+            }
+            else
+            {
+                Console.WriteLine("\nNo tienes una matrícula registrada.");
+            }
+
+            Console.WriteLine("\nPresiona cualquier tecla para volver al menú de matrícula...");
+            Console.ReadKey();
+            Console.Clear();
+            GestionarMatricula(usuario);
+        }
+
+        /// <summary>
+        /// Permite al usuario actualizar su grado académico en la matrícula existente.
+        /// Actualiza tanto en el controlador como en el objeto usuario local.
+        /// </summary>
+        /// <param name="usuario">Usuario cuyo grado se actualizará</param>
+        private static void ActualizarGrado(Usuario usuario)
+        {
+            string nuevoGrado = SeleccionarGrado();
+            ControladorMatricula.ActualizarGrado(usuario.Dni, nuevoGrado);
+            usuario.MatriculaActual.Grado = nuevoGrado;
+            Console.WriteLine("\n¡Grado actualizado correctamente!");
+
+            Console.WriteLine("\nPresiona cualquier tecla para volver al menú de matrícula...");
+            Console.ReadKey();
+            Console.Clear();
+            GestionarMatricula(usuario);
+        }
+
+        /// <summary>
+        /// Permite al usuario cambiar su turno de clases en la matrícula existente.
+        /// Actualiza tanto en el controlador como en el objeto usuario local.
+        /// </summary>
+        /// <param name="usuario">Usuario cuyo turno se cambiará</param>
+        private static void CambiarTurno(Usuario usuario)
+        {
+            Turno nuevoTurno = SeleccionarTurno();
+            ControladorMatricula.ActualizarTurno(usuario.Dni, nuevoTurno);
+            usuario.MatriculaActual.TurnoSeleccionado = nuevoTurno;
+            Console.WriteLine("\n¡Turno actualizado correctamente!");
+
+            Console.WriteLine("\nPresiona cualquier tecla para volver al menú de matrícula...");
+            Console.ReadKey();
+            Console.Clear();
+            GestionarMatricula(usuario);
+        }
+
+        /// <summary>
+        /// Permite al usuario modificar las materias seleccionadas en su matrícula.
+        /// Ofrece tanto selección manual como automática y actualiza todos los datos correspondientes.
+        /// </summary>
+        /// <param name="usuario">Usuario cuyas materias se modificarán</param>
+        private static void ModificarMaterias(Usuario usuario)
+        {
+            var (nuevasMaterias, esSeleccionAutomatica) = SeleccionarMaterias();
+            ControladorMatricula.ActualizarMaterias(usuario.Dni, nuevasMaterias);
+            usuario.MatriculaActual.MateriasSeleccionadas = nuevasMaterias;
+            usuario.MatriculaActual.EsSeleccionAutomatica = esSeleccionAutomatica;
+
+            // Actualizar usuario en JSON
+            ControladorUsuario.ActualizarUsuario(usuario);
+
+            Console.WriteLine("\n¡Materias actualizadas correctamente!");
+
+            Console.WriteLine("\nPresiona cualquier tecla para volver al menú de matrícula...");
+            Console.ReadKey();
+            Console.Clear();
+            GestionarMatricula(usuario);
+        }
+
+        /// <summary>
+        /// Muestra toda la información personal y académica del usuario de forma detallada.
+        /// Incluye datos personales y, si existe, información completa de la matrícula.
+        /// </summary>
+        /// <param name="usuario">Usuario cuya información se mostrará</param>
         private static void MostrarInformacionCompleta(Usuario usuario)
         {
             Console.WriteLine("\n=== INFORMACIÓN COMPLETA ===");

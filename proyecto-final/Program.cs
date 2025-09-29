@@ -6,48 +6,56 @@ using System.Threading.Tasks;
 
 namespace proyecto_final
 {
+    /// <summary>
+    /// Clase principal del programa que contiene el punto de entrada de la aplicación.
+    /// Se encarga de inicializar el sistema de matrícula universitaria.
+    /// </summary>
     class Program
     {
+        /// <summary>
+        /// Punto de entrada principal de la aplicación del sistema de matrícula universitaria.
+        /// Inicia el flujo del programa llamando al método iniciador que maneja toda la lógica de interfaz.
+        /// </summary>
+        /// <param name="args">Argumentos de línea de comandos (no utilizados en esta aplicación)</param>
         static void Main(string[] args)
         {
-            
-
+            // Inicializar el sistema de matrícula universitaria
             Iniciador.iniciador();
 
-            /// lucinda
-            /// pedido de dni
-            /// si existe deberia darte la bienvenida
-            /// te pregunta si quieres actualizar tus datos
-            /// 
-            /// sino deberia pedirte que te registres
-            /// al registrarte pedir nombres, apellidos, edad, sexo, dni, telefono, email, direccion, grado.
-            /// 
-            /// una vez registrado deberia darte la bienvenida
-            /// 
-            /// -----------------------------
-            /// andree
-            ///
-            /// elegir el grado de matricula
-            /// elefir el turno mañana o tarde
-            ///
-            /// dos opciones para elegir materias o el sistema elige por vos
-            /// 
-            /// elegir las materias o cursos - validar no repetir cursos. como max 6 materias
-            /// 
-            /// sino el sistema elige por vos 6 cursos
-            /// 
-            /// -----------------------------
-            /// yacson
-            /// 
-            /// luego de elegir las materias deberia mostrarte un resumen de tu matricula
-            /// preguntar si esta correcto
-            /// si el usuario se equivoco deberia darle la opcion de volver a elegir las materias
-            /// si todo esta bien deberia confirmar la matricula
-            /// retornar un mensaje de confirmacion de matricula
-            /// imprime matricula datos
-
-
-            /// vista - modelo - controlador joel, encargado de distribuir las tareas, funciones en el controlador y modelo bd json para no perder datos.
+            /* 
+             * DOCUMENTACIÓN DEL FLUJO DEL SISTEMA:
+             * 
+             * MÓDULO DE LUCINDA - Gestión de Usuarios:
+             * - Solicitud de DNI al usuario
+             * - Si existe: dar bienvenida y preguntar si quiere actualizar datos
+             * - Si no existe: proceso de registro completo
+             * - Registro incluye: nombres, apellidos, edad, sexo, dni, telefono, email, direccion, grado
+             * - Una vez registrado: dar bienvenida y proceder con matrícula
+             * 
+             * MÓDULO DE ANDREE - Sistema de Matrícula:
+             * - Selección del grado de matrícula
+             * - Elección del turno (mañana o tarde)
+             * - Dos opciones para elegir materias:
+             *   1. Manual: usuario elige sus materias
+             *   2. Automático: sistema elige por el usuario
+             * - Validación: máximo 6 materias, no repetir cursos
+             * - Si es automático: sistema elige 6 cursos aleatoriamente
+             * 
+             * MÓDULO DE YACSON - Confirmación y Resumen:
+             * - Mostrar resumen completo de la matrícula
+             * - Preguntar si está correcto
+             * - Si hay error: opción de volver a elegir materias
+             * - Si está bien: confirmar matrícula
+             * - Mensaje de confirmación final
+             * - Imprimir datos completos de la matrícula
+             * 
+             * ARQUITECTURA - JOEL:
+             * - Patrón Modelo-Vista-Controlador (MVC)
+             * - Distribución de tareas entre módulos
+             * - Funciones organizadas en controladores
+             * - Modelo de datos con persistencia en JSON
+             * - Base de datos JSON para no perder información entre sesiones
+             */
         }
     }
 }

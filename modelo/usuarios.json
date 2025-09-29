@@ -1,0 +1,57 @@
+[
+  {
+    "Nombres": "Joel",
+    "Apellidos": "Villanueva",
+    "Edad": 22,
+    "Sexo": "Masculino",
+    "Dni": "74753544",
+    "Telefono": "985903745",
+    "Email": "joel@gmail.com",
+    "Direccion": "Av. Prueba 123",
+    "MatriculaActual": {
+      "DniEstudiante": "74753544",
+      "Grado": "Administración",
+      "TurnoSeleccionado": 1,
+      "MateriasSeleccionadas": [
+        {
+          "Id": 9,
+          "Nombre": "Comunicación",
+          "Codigo": "COM101",
+          "Creditos": 2
+        },
+        {
+          "Id": 3,
+          "Nombre": "Química General",
+          "Codigo": "QUI101",
+          "Creditos": 3
+        },
+        {
+          "Id": 2,
+          "Nombre": "Física I",
+          "Codigo": "FIS101",
+          "Creditos": 4
+        },
+        {
+          "Id": 10,
+          "Nombre": "Metodología de Investigación",
+          "Codigo": "MET101",
+          "Creditos": 3
+        },
+        {
+          "Id": 1,
+          "Nombre": "Matemática I",
+          "Codigo": "MAT101",
+          "Creditos": 4
+        },
+        {
+          "Id": 5,
+          "Nombre": "Inglés I",
+          "Codigo": "ING101",
+          "Creditos": 2
+        }
+      ],
+      "FechaMatricula": "2025-09-28T18:03:52.3340126-05:00",
+      "EsSeleccionAutomatica": true
+    }
+  }
+]
