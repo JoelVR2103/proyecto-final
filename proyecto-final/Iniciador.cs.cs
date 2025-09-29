@@ -20,7 +20,7 @@ namespace proyecto_final
         /// </summary>
         public static void iniciador()
         {
-            Console.WriteLine("=== SISTEMA DE MATRICULA ===");
+            Console.WriteLine("=== SISTEMA DE MATRICULA UNIVERSIDAD BUEN ALEGRE===");
             Console.WriteLine("Hola, por favor ingresa tu DNI:");
 
             string dniIngresado = Console.ReadLine();
@@ -36,7 +36,7 @@ namespace proyecto_final
             if (ControladorUsuario.ExisteUsuario(dniIngresado))
             {
                 Usuario usuarioExistente = ControladorUsuario.BuscarUsuarioPorDni(dniIngresado);
-                Console.WriteLine($"¡Bienvenido {usuarioExistente.ObtenerNombreCompleto()}!");
+                Console.WriteLine($"¡Bienvenido {usuarioExistente.ObtenerNombreCompleto()} a sistema de matriculas Buen Alegre!");
                 MostrarMenuUsuarioExistente(usuarioExistente);
             }
             else
